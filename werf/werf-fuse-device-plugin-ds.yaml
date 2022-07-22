@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: werf-fuse-device-plugin
+spec:
+  selector:
+    matchLabels:
+      name: werf-fuse-device-plugin
+  template:
+    metadata:
+      labels:
+        name: werf-fuse-device-plugin
+    spec:
+      hostNetwork: true
+      containers:
+      - image: soolaugust/fuse-device-plugin:v1.0
+        name: fuse-device-plugin-ctr
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ["ALL"]
+        volumeMounts:
+          - name: device-plugin
+            mountPath: /var/lib/kubelet/device-plugins
+      volumes:
+        - name: device-plugin
+          hostPath:
+            path: /var/lib/kubelet/device-plugins

@@ -1,0 +1,5 @@
+ci_access:
+  groups:
+  - id: <group_id>
+  projects:
+  - id: <project_id>

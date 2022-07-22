@@ -1,0 +1,16 @@
+gitlabUrl: "YOUR_DOMAIN"
+runnerRegistrationToken: "YOUR_TOKEN"
+rbac:
+  serviceAccountName: gitlab-kubernetes-runner-deploy
+runners:
+  config: |
+    [[runners]]
+      [runners.kubernetes]
+        service_account = "gitlab-kubernetes-runner-deploy"
+        namespace = "gitlab-ci"
+        image = "ubuntu:16.04"
+        privileged = true
+        pod_annotations = ["container.apparmor.security.beta.kubernetes.io/werf-converge=unconfined"]
+  tags: "werf" # OR YOUR SPECIFIC TAGS
+  serviceAccountName: gitlab-kubernetes-runner-deploy
+  cloneUrl: https://<YOUR_DOMAIN>/
